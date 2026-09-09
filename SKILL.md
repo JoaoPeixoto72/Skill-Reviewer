@@ -1,6 +1,6 @@
 ---
 name: skill-reviewer
-description: Reviews an existing Claude Code or Agent Skill for specification compliance, use-case coverage, triggering, instruction quality, context efficiency, resources, permissions, security, portability, and model fit. Use when the user asks to audit, review, validate, critique, inspect, or improve a SKILL.md or skill folder; asks why a skill triggers incorrectly; or wants to check it before publishing or after migrating models. Performs static analysis only; behavioral evals and benchmarks belong to skill-creator.
+description: Reviews an existing Claude Code or Agent Skill for spec compliance, coverage, triggering, instruction quality, context efficiency, resources, permissions, security, portability, and model fit. Use when the user asks to audit, review, validate, critique, inspect, or improve a SKILL.md or skill folder; asks why a skill triggers incorrectly; or wants to check it before publishing or after migrating models. Performs static analysis only; behavioral evals and benchmarks belong to skill-creator.
 license: MIT
 argument-hint: "<skill-path> [--target claude-code|portable|claude-upload] [--model opus-5|fable-5.1|generic] [--depth quick|standard|deep]"
 model: opus
@@ -14,7 +14,7 @@ disallowed-tools:
   - WebFetch
   - WebSearch
 metadata:
-  version: "2.2.0"
+  version: "2.3.0"
   updated: "2026-09-09"
 ---
 
@@ -81,6 +81,15 @@ Assign confidence:
 - **High** — directly demonstrated by files or established requirements.
 - **Medium** — strongly implied but runtime-dependent.
 - **Low** — requires execution or missing context.
+
+Confidence has to change what the reader does with a finding, or it is
+decoration on the report:
+
+- **High** — act on it.
+- **Medium** — act on it, and state what would confirm it.
+- **Low** — never sustains a Blocker or Major on its own. It ships as something
+  to check, with the check named. A Low finding that cannot name its check does
+  not ship at all.
 
 Every finding must include:
 
@@ -381,6 +390,11 @@ Use one verdict:
 Base the verdict on impact rather than finding count.
 
 ## Report format
+
+`references/example-report.md` is one finished review at `standard` depth, for
+when the shape of a finding or the density of the evidence is unclear. Read it
+once; it is not part of the procedure and does not need loading on every
+review.
 
 Return:
 

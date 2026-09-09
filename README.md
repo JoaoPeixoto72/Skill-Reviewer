@@ -85,6 +85,22 @@ length and charset, description limits, the permitted frontmatter fields.
 `--depth quick` reports only Blockers and Majors; `deep` adds minor
 consistency, maintenance and efficiency findings.
 
+### One thing to know before you invoke it
+
+The skill declares `model: opus` and `effort: high`. In Claude Code a `model`
+override **applies for the rest of the turn**, not just for the review — so the
+turn you review in stays on Opus afterwards. That is deliberate: the failure
+mode of a cheap review is not a worse report, it is a wrong verdict someone
+acts on, or false positives that teach you to stop reading it. But it is your
+turn and your budget, so it should not be a surprise.
+
+### What a report looks like
+
+[`references/example-report.md`](references/example-report.md) is one finished
+review at `standard` depth — a real-shaped skill with real-shaped defects, so
+you can see the density of evidence expected before you run it on your own
+work.
+
 ## What you get back
 
 A report ordered by severity, with one verdict:
