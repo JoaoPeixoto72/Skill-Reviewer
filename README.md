@@ -58,6 +58,10 @@ Or just ask:
 
 ## Use it
 
+Installing puts the files in place, once. Everything below happens **every time
+you run it** — the flags are arguments to the invocation, never to the install.
+Nothing about the install decides how a review behaves.
+
 ```text
 /skill-reviewer .claude/skills/my-skill
 ```
@@ -71,6 +75,12 @@ Or describe the job and let it fire:
 > check this skill still holds up after moving it to Opus 5
 
 ### Options
+
+All three are optional, and go on the invocation line after the path:
+
+```text
+/skill-reviewer .claude/skills/my-skill --target portable --depth deep
+```
 
 | Flag | Values | Default |
 |---|---|---|
