@@ -2,7 +2,7 @@
 name: skill-reviewer
 description: Reviews an existing Claude Code or Agent Skill for spec compliance, coverage, triggering, instruction quality, context efficiency, resources, permissions, security, portability, and model fit. Use when the user asks to audit, review, validate, critique, inspect, or improve a SKILL.md or skill folder; asks why a skill triggers incorrectly; or wants to check it before publishing or after migrating models. Performs static analysis only; behavioral evals and benchmarks belong to skill-creator.
 license: MIT
-argument-hint: "<skill-path> [--target claude-code|portable|claude-upload] [--model opus-5|fable-5.1|generic] [--depth quick|standard|deep]"
+argument-hint: "<skill-path> [--target claude-code|portable|claude-upload] [--model opus-5|fable-5.1|gpt-6-astra|generic] [--depth quick|standard|deep]"
 model: opus
 effort: high
 allowed-tools: Read Glob Grep
@@ -14,7 +14,7 @@ disallowed-tools:
   - WebFetch
   - WebSearch
 metadata:
-  version: "2.3.0"
+  version: "2.4.0"
   updated: "2026-09-09"
 ---
 
@@ -42,6 +42,7 @@ Options:
 - `--target claude-upload`: Apply Claude.ai and Claude API upload requirements.
 - `--model opus-5`: Apply Opus 5 guidance.
 - `--model fable-5.1`: Apply Fable 5.1 guidance.
+- `--model gpt-6-astra`: Apply GPT-6 Astra guidance.
 - `--model generic`: Apply only cross-model guidance.
 - `--depth quick`: Report Blockers and Majors.
 - `--depth standard`: Report material findings at all severities.
@@ -325,45 +326,19 @@ If the skill contains credential theft, malware, spyware, exploit payloads, or c
 
 ### 8. Apply the selected model profile
 
-#### Opus 5
+Load the one profile named by `--model` from `references/model-profiles.md`,
+and only that one. They are mutually exclusive, and the others are dead weight
+in the review at hand.
 
-Assess whether the skill provides clear scope and output constraints without unnecessary scaffolding.
+A profile asks a single question — does the skill account for how the model
+that will run it behaves? — and the answer is never a compliance list. A skill
+that never triggers the behaviour a profile describes has nothing to answer
+for.
 
-Look for:
-
-- excessive progress narration;
-- repeated self-verification;
-- mandatory verifier subagents without concrete need;
-- unlimited delegation;
-- unrelated improvements;
-- incomplete upfront specifications for long tasks;
-- suggestions requested when implementation is intended;
-- rigid step-by-step reasoning;
-- unclear boundaries on files or systems changed.
-
-Treat narration as excessive only when it does not communicate material progress, decisions, blockers, risks, or results.
-
-Use additional verification when concrete acceptance criteria or high consequences justify it. Do not assume any effort level is universally optimal.
-
-#### Fable 5.1
-
-Assess whether the skill supports:
-
-- completion of the requested task;
-- useful progress updates during long work;
-- batching independent tool calls;
-- targeted rather than whole-file edits;
-- control of unrelated changes and excessive tests;
-- explicit retrieval when required;
-- readable, structured output;
-- sufficient output space for long deliverables;
-- append-only conversation history where relevant.
-
-#### Generic
-
-Assess clarity, context, output constraints, tool requirements, autonomy, examples, and resistance to overfitting.
-
-Recommend examples, XML, or additional structure only when they solve an observed problem.
+The same instruction can be a defect under one profile and a correction under
+another: Opus 5 looks for unlimited delegation, GPT-6 Astra looks for
+under-delegation. Name the profile in any model-fit finding, so the reader
+knows which standard produced it.
 
 ### 9. State static limits and verdict
 

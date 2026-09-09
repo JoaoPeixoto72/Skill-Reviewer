@@ -75,7 +75,7 @@ Or describe the job and let it fire:
 | Flag | Values | Default |
 |---|---|---|
 | `--target` | `claude-code`, `portable`, `claude-upload` | `claude-code` |
-| `--model` | `opus-5`, `fable-5.1`, `generic` | `opus-5` |
+| `--model` | `opus-5`, `fable-5.1`, `gpt-6-astra`, `generic` | `opus-5` |
 | `--depth` | `quick`, `standard`, `deep` | `standard` |
 
 `--target portable` applies the Agent Skills specification strictly — name
@@ -84,6 +84,19 @@ length and charset, description limits, the permitted frontmatter fields.
 
 `--depth quick` reports only Blockers and Majors; `deep` adds minor
 consistency, maintenance and efficiency findings.
+
+### Model profiles
+
+A profile asks whether the skill accounts for how the model that will run it
+behaves. Exactly one applies per review, and the report names which — the same
+instruction can be a defect under one and a correction under another: Opus 5
+looks for unlimited delegation, GPT-6 Astra looks for *under*-delegation.
+
+They live in [`references/model-profiles.md`](references/model-profiles.md),
+one section each, with the source cited. That is the part of this skill with a
+shelf life: when a model ships, adding or replacing a profile is one section in
+one file, and nothing else moves. Changing the default is one line in
+`## Defaults`.
 
 ### One thing to know before you invoke it
 
