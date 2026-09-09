@@ -14,7 +14,7 @@ disallowed-tools:
   - WebFetch
   - WebSearch
 metadata:
-  version: "2.1.0"
+  version: "2.2.0"
   updated: "2026-09-09"
 ---
 
@@ -152,7 +152,25 @@ For portable Agent Skills, verify:
 
 For Claude.ai or API upload, also apply known platform restrictions concerning reserved names, XML in frontmatter, accepted fields, and packaging.
 
-For Claude Code, accept supported Claude Code extensions. Treat an uncertain field as unverified rather than invalid.
+For Claude Code, the frontmatter also accepts, beyond the portable fields:
+`when_to_use`, `argument-hint`, `arguments`, `disable-model-invocation`,
+`user-invocable`, `disallowed-tools`, `model`, `effort`, `context`, `agent`,
+`background`, `hooks`, `paths`, and `shell`. All are optional. Treat a field
+outside this set as unverified rather than invalid: the set grows, and a
+reviewer that calls every new field an error ages badly.
+
+Three of these mean nothing alone, and the combination is where the defects
+are:
+
+- `agent` and `background` apply **only** together with `context: fork`.
+  Either one declared without it is inert, and the skill does not do what its
+  frontmatter says.
+- `background: false` is what makes a forked subagent block the turn that
+  invoked it. A skill that forks and then uses the result in the same turn
+  needs it, and silently gets nothing without it.
+- `shell` selects the interpreter for injected `` !`command` `` blocks —
+  `bash` by default, or `powershell`. POSIX commands in those blocks under
+  `shell: powershell` fail on every platform, including Windows.
 
 Interpret permissions accurately:
 
@@ -169,6 +187,21 @@ Evaluate whether the metadata distinguishes:
 - near-miss requests that should not;
 - automatic from manual-only workflows;
 - the skill from adjacent capabilities.
+
+Triggering is not the `description` alone. Four fields decide it, and a review
+that reads only the prose reports findings that the frontmatter already
+answers:
+
+- `disable-model-invocation: true` makes the skill manual-only. Its
+  description no longer competes for automatic activation, and judging it as
+  if it did produces false findings.
+- `user-invocable: false` hides it from the `/` menu, which makes the
+  description the only way in — breadth matters more there, not less.
+- `paths` limits activation to glob patterns. It is the right correction for a
+  description that went broad because it was trying to say "only in this kind
+  of file".
+- `when_to_use` carries trigger phrases and examples, so the `description`
+  does not have to repeat them to be complete.
 
 Look for vague scope, keyword stuffing, hidden trigger conditions, excessive breadth, missing exclusions, and promises absent from the body.
 
@@ -260,7 +293,12 @@ Assess:
 - network access;
 - untrusted content;
 - irreversible actions;
-- scope expansion.
+- scope expansion;
+- `hooks` declared in the frontmatter, which Claude Code registers on
+  invocation and keeps running for the rest of the session. They outlive the
+  skill that installed them, so their blast radius is the session and not the
+  turn — a skill that registers one and does not say so in its description is
+  a Major finding.
 
 A user should be able to predict what the skill reads, changes, executes, sends, publishes, or deletes from its description and instructions.
 
