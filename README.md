@@ -108,8 +108,10 @@ otherwise whichever model is running the review — which, when you are reviewin
 your own skill on the setup you will run it on, is the same model anyway. A
 model with no profile of its own takes `generic`.
 
-Pass `--model` for one case: the skill is shipping to run somewhere else. A
-flag guessed wrong is worse than no flag, which is why it is not asked for.
+Pass `--model` only when the model that will run the reviewed skill is not the
+one running the review: you review under Opus 5 but invoke that skill under a
+cheaper model, or you publish it and anyone might run it (`generic`). A flag
+guessed wrong is worse than no flag, which is why it is never asked for.
 
 Exactly one applies per review, and the report names which — the same
 instruction can be a defect under one and a correction under another: Opus 5

@@ -14,7 +14,7 @@ disallowed-tools:
   - WebFetch
   - WebSearch
 metadata:
-  version: "2.6.1"
+  version: "2.6.2"
   updated: "2026-09-09"
 ---
 
@@ -41,9 +41,11 @@ Options:
 - `--target claude-code`: Accept supported Claude Code features.
 - `--target portable`: Apply the portable Agent Skills specification.
 - `--target claude-upload`: Apply Claude.ai and Claude API upload requirements.
-- `--model opus-5|fable-5.1|gpt-6-astra|generic`: **Override only.** Needed
-  solely when the skill under review will ship to a model that is not the one
-  running this review. Otherwise leave it alone — see below.
+- `--model opus-5|fable-5.1|gpt-6-astra|generic`: **Override only.** Give it
+  when the reviewed skill will be run by a different model than the one doing
+  this review — reviewing under Opus 5 a skill that gets invoked under a
+  cheaper model, or one that anyone might run. Otherwise leave it alone: it
+  resolves itself.
 - `--depth quick`: Report Blockers and Majors.
 - `--depth standard`: Report material findings at all severities.
 - `--depth deep`: Include minor consistency, maintenance, and efficiency findings.
@@ -60,8 +62,8 @@ line, opposite verdicts.
 **Do not ask the user which model.** Resolve it, in this order, and stop at the
 first that answers:
 
-1. **`--model`, if the user supplied it.** The one case that needs it: the
-   skill is being shipped to run on a model other than this one.
+1. **`--model`, if the user supplied it.** The only reason to supply it: the
+   model that will run the reviewed skill is not the model running this review.
 2. **The reviewed skill's own `model:` frontmatter.** A skill that declares its
    model has answered the question itself, and that declaration outranks
    inference. `inherit` is not an answer — fall through.
