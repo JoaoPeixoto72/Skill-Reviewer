@@ -87,8 +87,17 @@ consistency, maintenance and efficiency findings.
 
 ### Model profiles
 
-A profile asks whether the skill accounts for how the model that will run it
-behaves. Exactly one applies per review, and the report names which — the same
+`--model` is **the model that will run the skill you are reviewing** — not the
+model doing the review. That one needs no profile: it is already the model.
+
+The distinction decides findings. "Verify your work, then verify it again" in a
+reviewed skill is redundant scaffolding under Opus 5 and reasonable under a
+weaker model. Same line, opposite verdicts.
+
+If you do not pass `--model`, the reviewed skill's own `model:` frontmatter is
+used; failing that, Opus 5. A model with no profile takes `generic`.
+
+Exactly one applies per review, and the report names which — the same
 instruction can be a defect under one and a correction under another: Opus 5
 looks for unlimited delegation, GPT-6 Astra looks for *under*-delegation.
 

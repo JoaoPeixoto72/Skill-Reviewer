@@ -8,6 +8,10 @@ account for how the model that will run it actually behaves?** None of them is
 a compliance list. A skill that never triggers the behaviour a profile
 describes has nothing to answer for.
 
+None of these describes the model performing the review. That one needs no
+profile — it is already the model, and it reads its own instructions from this
+skill's frontmatter.
+
 Profiles age. Each carries its source so that replacing one when a model ships
 is a contained edit, not an archaeology exercise.
 

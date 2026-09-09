@@ -14,7 +14,7 @@ disallowed-tools:
   - WebFetch
   - WebSearch
 metadata:
-  version: "2.4.0"
+  version: "2.5.0"
   updated: "2026-09-09"
 ---
 
@@ -30,7 +30,8 @@ Unless the user specifies otherwise:
 
 - Review the supplied skill path or skill content.
 - Target Claude Code.
-- Apply the Opus 5 profile.
+- Assume Opus 5 will run the skill under review, unless its own frontmatter
+  says otherwise.
 - Use standard depth.
 - Review one skill and its directly referenced files.
 - Leave all files unchanged.
@@ -49,6 +50,29 @@ Options:
 - `--depth deep`: Include minor consistency, maintenance, and efficiency findings.
 
 If no skill path or content is supplied, ask the user for one.
+
+### Which model profile applies, and to what
+
+`--model` names **the model that will run the skill under review**. It is not
+the model performing the review, and there is no profile for that one: the
+reviewing model is fixed by this skill's own frontmatter, and a model does not
+need to be told how it behaves.
+
+The distinction decides findings. "Verify your work, then verify it again" in a
+reviewed skill is redundant scaffolding under Opus 5 and reasonable under a
+weaker model. Same line, opposite verdicts, and the only thing that separates
+them is which model runs it.
+
+Select in this order:
+
+1. `--model`, when the user gives it.
+2. The `model:` field in the reviewed skill's own frontmatter — the skill's own
+   answer to the question. `inherit` is not an answer; fall through.
+3. Opus 5.
+
+A model with no profile of its own takes `generic`. State in the report which
+profile applied and where it came from: a model-fit finding cannot be read
+without knowing which standard produced it.
 
 ## Evidence
 
