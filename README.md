@@ -75,7 +75,7 @@ Or describe the job and let it fire:
 | Flag | Values | Default |
 |---|---|---|
 | `--target` | `claude-code`, `portable`, `claude-upload` | `claude-code` |
-| `--model` | `opus-5`, `fable-5.1`, `gpt-6-astra`, `generic` | `opus-5` |
+| `--model` | `opus-5`, `fable-5.1`, `gpt-6-astra`, `generic` | resolves itself — see below |
 | `--depth` | `quick`, `standard`, `deep` | `standard` |
 
 `--target portable` applies the Agent Skills specification strictly — name

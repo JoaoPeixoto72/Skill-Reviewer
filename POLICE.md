@@ -49,6 +49,14 @@ Otherwise it is a Concern.
 Confidence drops when impact stays speculative. It does not drop because the
 finding is uncomfortable.
 
+It also has to earn its place, by changing what you are expected to do:
+
+| Confidence | What it asks of you |
+|---|---|
+| **High** | Act on it. |
+| **Medium** | Act on it, and the finding states what would confirm it. |
+| **Low** | Never sustains a Blocker or Major on its own. It arrives as something to check, with the check named — and if it cannot name one, it does not ship. |
+
 ## 4. Every finding carries its evidence
 
 No finding ships without all five:
@@ -104,8 +112,10 @@ recommends them only when they would settle a material uncertainty.
 - **Target-specific is not defective.** A feature that fits the declared target
   (Claude Code, portable Agent Skills, Claude.ai upload) is a trade-off, not a
   fault. Uncertain fields are reported as unverified, not as invalid.
-- **Model guidance is guidance.** Opus 5 and Fable 5.1 profiles are applied as
-  fit, never as compliance.
+- **Model guidance is guidance.** A model profile is applied as fit, never as
+  compliance, and exactly one applies per review. Which profiles exist is not
+  fixed here — models ship — and the report names the one it used and how it
+  was resolved.
 - **Omissions are disclosed.** Files that could not be inspected, and
   assumptions the review rests on, are stated in the report.
 

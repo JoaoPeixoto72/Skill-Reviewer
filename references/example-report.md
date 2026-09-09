@@ -25,7 +25,10 @@ hooks:
 # Skill review: `changelog-writer`
 
 **Verdict:** Needs revision
-**Target:** Claude Code · **Model profile:** Opus 5 · **Depth:** Standard
+**Target:** Claude Code · **Depth:** Standard
+**Model profile:** Opus 5 — the reviewing model, inferred: `changelog-writer`
+declares no `model:` of its own. Override with `--model` if it will ship
+elsewhere.
 **Reviewed:** `SKILL.md` (118 lines), `references/format.md`
 **Not inspected:** None
 **Assumptions:** The repository is a git repository, as the skill assumes throughout

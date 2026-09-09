@@ -14,7 +14,7 @@ disallowed-tools:
   - WebFetch
   - WebSearch
 metadata:
-  version: "2.6.0"
+  version: "2.6.1"
   updated: "2026-09-09"
 ---
 
@@ -404,7 +404,7 @@ Return:
 
 **Verdict:** Ready | Ready with minor changes | Needs revision | Not ready | Unable to assess  
 **Target:** Claude Code | Portable Agent Skills | Claude.ai/API Upload  
-**Model profile:** Opus 5 | Fable 5.1 | Generic  
+**Model profile:** Opus 5 | Fable 5.1 | GPT-6 Astra | Generic (resolved from: flag | reviewed skill's frontmatter | the reviewing model)  
 **Depth:** Quick | Standard | Deep  
 **Reviewed:** relevant files  
 **Not inspected:** material omissions, or “None”  
