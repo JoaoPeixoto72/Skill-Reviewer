@@ -14,7 +14,7 @@ disallowed-tools:
   - WebFetch
   - WebSearch
 metadata:
-  version: "2.5.0"
+  version: "2.6.0"
   updated: "2026-09-09"
 ---
 
@@ -30,8 +30,8 @@ Unless the user specifies otherwise:
 
 - Review the supplied skill path or skill content.
 - Target Claude Code.
-- Assume Opus 5 will run the skill under review, unless its own frontmatter
-  says otherwise.
+- Take the model profile from the review itself: no flag, no question, no
+  assumed default.
 - Use standard depth.
 - Review one skill and its directly referenced files.
 - Leave all files unchanged.
@@ -41,10 +41,9 @@ Options:
 - `--target claude-code`: Accept supported Claude Code features.
 - `--target portable`: Apply the portable Agent Skills specification.
 - `--target claude-upload`: Apply Claude.ai and Claude API upload requirements.
-- `--model opus-5`: Apply Opus 5 guidance.
-- `--model fable-5.1`: Apply Fable 5.1 guidance.
-- `--model gpt-6-astra`: Apply GPT-6 Astra guidance.
-- `--model generic`: Apply only cross-model guidance.
+- `--model opus-5|fable-5.1|gpt-6-astra|generic`: **Override only.** Needed
+  solely when the skill under review will ship to a model that is not the one
+  running this review. Otherwise leave it alone — see below.
 - `--depth quick`: Report Blockers and Majors.
 - `--depth standard`: Report material findings at all severities.
 - `--depth deep`: Include minor consistency, maintenance, and efficiency findings.
@@ -53,26 +52,30 @@ If no skill path or content is supplied, ask the user for one.
 
 ### Which model profile applies, and to what
 
-`--model` names **the model that will run the skill under review**. It is not
-the model performing the review, and there is no profile for that one: the
-reviewing model is fixed by this skill's own frontmatter, and a model does not
-need to be told how it behaves.
+A profile asks whether the reviewed skill suits the model that will run it.
+The distinction decides findings: "verify your work, then verify it again" is
+redundant scaffolding under Opus 5 and reasonable under a weaker model — same
+line, opposite verdicts.
 
-The distinction decides findings. "Verify your work, then verify it again" in a
-reviewed skill is redundant scaffolding under Opus 5 and reasonable under a
-weaker model. Same line, opposite verdicts, and the only thing that separates
-them is which model runs it.
+**Do not ask the user which model.** Resolve it, in this order, and stop at the
+first that answers:
 
-Select in this order:
+1. **`--model`, if the user supplied it.** The one case that needs it: the
+   skill is being shipped to run on a model other than this one.
+2. **The reviewed skill's own `model:` frontmatter.** A skill that declares its
+   model has answered the question itself, and that declaration outranks
+   inference. `inherit` is not an answer — fall through.
+3. **The model performing this review.** You know which model you are without
+   being told, and in the common case — the author reviewing their own skill on
+   the setup they will run it on — it is also the model that will run it.
 
-1. `--model`, when the user gives it.
-2. The `model:` field in the reviewed skill's own frontmatter — the skill's own
-   answer to the question. `inherit` is not an answer; fall through.
-3. Opus 5.
+There is no fixed default, because a fixed default is a guess that ages. If the
+resolved model has no profile of its own, use `generic` rather than the profile
+of a model it merely resembles.
 
-A model with no profile of its own takes `generic`. State in the report which
-profile applied and where it came from: a model-fit finding cannot be read
-without knowing which standard produced it.
+State in the report which profile applied and which of the three steps produced
+it. A model-fit finding cannot be read without knowing the standard behind it,
+and step 3 is an inference the reader may want to override.
 
 ## Evidence
 

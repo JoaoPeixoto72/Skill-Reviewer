@@ -87,15 +87,19 @@ consistency, maintenance and efficiency findings.
 
 ### Model profiles
 
-`--model` is **the model that will run the skill you are reviewing** — not the
-model doing the review. That one needs no profile: it is already the model.
+A profile asks whether the reviewed skill suits **the model that will run it**.
+The distinction decides findings: "verify your work, then verify it again" is
+redundant scaffolding under Opus 5 and reasonable under a weaker model — same
+line, opposite verdicts.
 
-The distinction decides findings. "Verify your work, then verify it again" in a
-reviewed skill is redundant scaffolding under Opus 5 and reasonable under a
-weaker model. Same line, opposite verdicts.
+**You do not have to pass `--model`, and usually should not.** It resolves
+itself: the reviewed skill's own `model:` frontmatter if it declares one,
+otherwise whichever model is running the review — which, when you are reviewing
+your own skill on the setup you will run it on, is the same model anyway. A
+model with no profile of its own takes `generic`.
 
-If you do not pass `--model`, the reviewed skill's own `model:` frontmatter is
-used; failing that, Opus 5. A model with no profile takes `generic`.
+Pass `--model` for one case: the skill is shipping to run somewhere else. A
+flag guessed wrong is worse than no flag, which is why it is not asked for.
 
 Exactly one applies per review, and the report names which — the same
 instruction can be a defect under one and a correction under another: Opus 5

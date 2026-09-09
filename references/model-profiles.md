@@ -8,9 +8,10 @@ account for how the model that will run it actually behaves?** None of them is
 a compliance list. A skill that never triggers the behaviour a profile
 describes has nothing to answer for.
 
-None of these describes the model performing the review. That one needs no
-profile — it is already the model, and it reads its own instructions from this
-skill's frontmatter.
+Nothing here is instructions for the model doing the reviewing. It already is
+that model. But when nothing declares which model will run the reviewed skill,
+the reviewing model stands in for it — usually the author is reviewing on the
+same setup they will run it on. `SKILL.md` has the resolution order.
 
 Profiles age. Each carries its source so that replacing one when a model ships
 is a contained edit, not an archaeology exercise.
